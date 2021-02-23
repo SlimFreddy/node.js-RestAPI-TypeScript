@@ -1,4 +1,4 @@
-import express, { request } from "express";
+import express from "express";
 import verify from "./verifyToken";
 import { validatePost } from "../models/validation/PostValidation";
 import Post from "../models/Post";

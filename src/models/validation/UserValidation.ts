@@ -1,4 +1,4 @@
-import Joi, { number } from "joi";
+import Joi from "joi";
 import IUser from "../interfaces/IUser";
 
 export const validateUserSignUp = (user: IUser) => {
