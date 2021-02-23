@@ -1,7 +1,7 @@
 ## node.js-RestAPI-TypeScript
 
 Node.js App written in TypeScript. This app provides a little Rest API for a Blog.
-You can sign up with a Username and Password. After Sign in you can get all Posts, get one by Id, add One or delete one when your User have created it. The Database for this Project is a MongoDB.
+You can sign up with a Username and Password. After Sign in you can get all Posts, get one by id, add one or delete one when your User have created it. The Database for this Project is a MongoDB.
 
 # Get Started
 
