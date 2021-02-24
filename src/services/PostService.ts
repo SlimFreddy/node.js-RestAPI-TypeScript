@@ -1,19 +1,20 @@
 import { Query } from "mongoose";
+import HttpException from "../models/exceptions/HttpException";
 import IPost from "../models/interfaces/IPost";
 import Post from "../models/Post";
-import { validatePost } from "../models/validation/PostValidation";
+import { validatePost } from "../models/validations/PostValidation";
 
 class PostService {
   public async getAllPost(): Promise<IPost[]> {
     try {
       const posts = await Post.find({});
-      if (posts) {
+      if (posts.length >0) {
         return posts;
       } else {
-        throw new Error(`No Posts found`);
+        throw new HttpException(404,`No Posts found`);
       }
     } catch (error) {
-      throw new Error(error.message);
+      throw new HttpException(error.status || 500, error.message);
     }
   }
 
@@ -23,10 +24,10 @@ class PostService {
       if (post) {
         return post;
       } else {
-        throw new Error(`Post with id ${id} not found`);
+        throw new HttpException(404,`Post with id ${id} not found`);
       }
     } catch (error) {
-      throw new Error(error.message);
+      throw new HttpException(error.status || 500, error.message);
     }
   }
 
@@ -47,7 +48,7 @@ class PostService {
         return result;
       })
       .catch((error) => {
-        throw new Error(error.message);
+        throw new HttpException(500,error.message);
       });
   }
 
@@ -62,13 +63,13 @@ class PostService {
           const deletePost = await Post.deleteOne(post);
           return deletePost;
         } else {
-          throw new Error(`Not allowd to delete this post with id ${postId}`);
+          throw new HttpException(500, `Not allowd to delete this post with id ${postId}`);
         }
       } else {
-        throw new Error(`Post with id ${postId} not found`);
+        throw new HttpException(404, `Post with id ${postId} not found`);
       }
     } catch (error) {
-      throw new Error(error.message);
+        throw new HttpException(error.status || 500 , error.message);
     }
   }
 }

@@ -16,7 +16,8 @@
     "express": "^4.17.1",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.17"
+    "mongoose": "^5.11.17",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
@@ -25,6 +26,7 @@
     "@types/joi": "^17.2.3",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.10.3",
+    "@types/morgan": "^1.9.2",
     "@types/node": "^14.14.31",
     "nodemon": "^2.0.7",
     "ts-node": "^9.1.1",

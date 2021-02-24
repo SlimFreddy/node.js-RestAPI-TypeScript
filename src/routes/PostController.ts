@@ -1,35 +1,35 @@
 import express from "express";
-import verify from "./verifyToken";
-import { validatePost } from "../models/validation/PostValidation";
-import Post from "../models/Post";
+import verify from "../services/JwtService";
 import PostService from "../services/PostService";
 
 const postController = express();
 
 // GET ALL POST
-postController.get("/", verify, async (req, res) => {
+postController.get("/", verify, async (req, res, next) => {
   try {
     const posts = await PostService.getAllPost();
     return res.status(200).json({
       posts,
     });
-  } catch (err) {
-    return res.status(404).send(err.message);
+  } catch (error) {
+    next(error)
   }
+
 });
 // GET POST BY ID
-postController.get("/post/:postId", verify, async (req, res) => {
+postController.get("/post/:postId", verify, async (req, res, next) => {
   try {
     const post = await PostService.getPostById(req.params.postId);
     return res.status(200).json({
       post,
     });
-  } catch (err) {
-    return res.status(404).send(err.message);
+  } catch (error) {
+    next(error)
   }
+
 });
 // DELETE POST BY ID
-postController.delete("/post/:postId", verify, async (req, res) => {
+postController.delete("/post/:postId", verify, async (req, res, next) => {
   try {
     const post = await PostService.deletePostByIdAndUserId(
       req.params.postId,
@@ -38,22 +38,19 @@ postController.delete("/post/:postId", verify, async (req, res) => {
     return res.status(200).json({
       post,
     });
-  } catch (err) {
-    return res.status(404).send(err.message);
+  } catch (error) {
+    next(error);
   }
 });
 // ADD NEW POST
-postController.post("/post/add", verify, async (req, res) => {
+postController.post("/post/add", verify, async (req, res, next) => {
   try {
     const post = await PostService.addNewPost(req.body, req.user._id);
     return res.status(201).json({
       post: post,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: error.message,
-      error,
-    });
+    next(error);
   }
 });
 
