@@ -35,4 +35,4 @@ You can sign up with a Username and Password. After Sign in you can get all Post
 
   
 
-In ./API-Insomnia is file for testing the running API. Install "Insomnia Core" https://insomnia.rest/download/ and import this ./API-Insomnia/RestApi.json. Now you are abled to test the Rest-API. Header musst be change to your token ;)
+In ./API-Insomnia is file for testing the running API. Install "Insomnia Core" https://insomnia.rest/download/ and import this ./API-Insomnia/RestApi.json. Now you are able to test the Rest-API. Header must be change to your token ;)
