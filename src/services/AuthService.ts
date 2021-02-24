@@ -42,7 +42,7 @@ class AuthService {
     }
     const dbUser = await User.findOne({ username: user.username });
     if (!dbUser) {
-      throw new HttpException(500, "User dont exist");
+      throw new HttpException(500, "User don't exist");
     }
     const validPassword = await bcrypt.compare(user.password, dbUser.password);
     if (!validPassword) {

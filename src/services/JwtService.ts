@@ -18,7 +18,7 @@ export default function verify(
 ) {
   const jwtToken = req.header("jwt");
   if (!jwtToken) {
-    const error = new HttpException(401, "Acces Denied");
+    const error = new HttpException(401, "Access Denied");
     next(error);
   } else {
     try {
