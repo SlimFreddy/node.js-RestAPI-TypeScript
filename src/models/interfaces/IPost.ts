@@ -1,7 +1,7 @@
 import { Document } from "mongoose";
 
 export default interface IPost extends Document {
-  userId: string;
+  author: string;
   postTitle: string;
   postBody: string;
   date: Date;
