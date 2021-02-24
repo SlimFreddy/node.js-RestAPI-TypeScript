@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
-import authController from "./routes/AuthController";
+import authController from "./controller/AuthController";
 import mongoose from "mongoose";
 import * as dotenv from "dotenv";
-import postController from "./routes/PostController";
+import postController from "./controller/PostController";
 import morgan from "morgan";
 import HttpException from "./models/exceptions/HttpException";
 

@@ -1,5 +1,5 @@
 import HttpException from "../models/exceptions/HttpException";
-import User from "../models/User";
+import User from "../models/mongo-db/User";
 import {
   validateUserSignIn,
   validateUserSignUp,

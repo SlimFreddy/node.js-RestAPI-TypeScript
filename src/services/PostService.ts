@@ -1,7 +1,7 @@
 import { Query } from "mongoose";
 import HttpException from "../models/exceptions/HttpException";
 import IPost from "../models/interfaces/IPost";
-import Post from "../models/Post";
+import Post from "../models/mongo-db/Post";
 import { validatePost } from "../models/validations/PostValidation";
 
 class PostService {
