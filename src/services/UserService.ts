@@ -21,13 +21,13 @@ class UserService {
   public async deleteUserImage(userId: string) {
     const user = await User.findById(userId);
     if (user) {
-      if (user.userImage) {
+      if (user.userImage !== process.env.DEFAULT_USER_IMAGE_PATH) {
         const filePath = user.userImage;
         fs.unlink(filePath, (error) => {
           return;
         });
         await User.findByIdAndUpdate(userId, {
-          userImage: process.env.DEFAULT_USER_IMAGE,
+          userImage: process.env.DEFAULT_USER_IMAGE_PATH,
         });
         return await User.findById(userId);
       } else {
@@ -35,6 +35,16 @@ class UserService {
       }
     } else {
       throw new HttpException(404, "User not Found");
+    }
+  }
+
+  public async getUserImage(userId: string) {
+    const user = await User.findById(userId);
+    if (user) {
+      return user.userImage;
+    }
+    else{
+      throw new HttpException(404, "User Image not Found");
     }
   }
 }

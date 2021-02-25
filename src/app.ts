@@ -27,9 +27,10 @@ app.use((req, res, next)=>{
     res.header('Access-Control-Allow-METHOD', 'POST, GET, DELETE');
     return res.status(200).json({});
   }
+  next();
 })
 //AUTHENTICATION REST API
-app.use("/api/user", authController);
+app.use("/api/auth", authController);
 //POST REST API
 app.use("/api/posts", postController);
 //USER REST API

@@ -24,7 +24,7 @@ class AuthService {
     const user = new User({
       username: newUser.username,
       password: hashPassword,
-      userImage: process.env.DEFAULT_USER_IMAGE,
+      userImage: process.env.DEFAULT_USER_IMAGE_PATH,
     });
     return user
       .save()
