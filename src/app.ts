@@ -10,9 +10,11 @@ import userController from "./controller/UserController";
 // ENVIRONMENT  FILE
 dotenv.config();
 // DATABASE CONNECTION
-mongoose.connect("mongodb://localhost:27017/blog", {
+mongoose.connect(process.env.MONGO_URL as string, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+}, ()=>{
+  console.log('\x1b[33m%s\x1b[0m',`[database]: Server connect to ${process.env.MONGO_URL} database`)
 });
 const app = express();
 // SERVER LOGGER FOR REQUEST
@@ -55,6 +57,6 @@ app.use(
 // SERVER PORT
 app.listen(process.env.SERVER_PORT, () => {
   console.log(
-    `[server]: Server is running at https://localhost:${process.env.SERVER_PORT}`
+    '\x1b[33m%s\x1b[0m',  `[server]: Server is running at https://localhost:${process.env.SERVER_PORT}`
   );
 });
