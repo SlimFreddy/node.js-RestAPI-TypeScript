@@ -1,4 +1,5 @@
 import express from "express";
+import { IUsernameValid } from "src/models/interfaces/IUsernameValid";
 import AuthService from "../services/AuthService";
 
 const authController = express();
@@ -17,8 +18,18 @@ authController.post("/sign-up", async (req, res, next) => {
 authController.post("/sign-in", async (req, res, next) => {
   try {
     const jwtToken = await AuthService.signInUser(req.body);
-    res.header("jwt", jwtToken).json({jwt: jwtToken});
-
+    res.header("jwt", jwtToken).json({ jwt: jwtToken });
+  } catch (error) {
+    next(error);
+  }
+});
+// CHECK IF USER NAME IS IN USE AND VALID
+authController.get("/username/:username", async (req, res, next) => {
+  try {
+    const usernameValid: IUsernameValid = await AuthService.checkUsername(
+      req.params.username
+    );
+    return res.json({ usernameValid });
   } catch (error) {
     next(error);
   }

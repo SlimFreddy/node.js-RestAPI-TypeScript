@@ -1,12 +1,14 @@
 import HttpException from "../models/exceptions/HttpException";
 import User from "../models/mongo-db/User";
 import {
+  validateUsername,
   validateUserSignIn,
   validateUserSignUp,
 } from "../models/validations/UserValidation";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import IUser from "../models/interfaces/IUser";
+import { IUsernameValid } from "src/models/interfaces/IUsernameValid";
 
 class AuthService {
   public async signUpNewUser(newUser: IUser) {
@@ -53,6 +55,27 @@ class AuthService {
       { _id: dbUser._id },
       process.env.JWT_TOKEN_SECRET as string
     );
+  }
+
+  public async checkUsername(username: string) : Promise<IUsernameValid> {
+    const { error } = validateUsername(username);
+    if (error) {
+      return {
+        isValid: false,
+        message: error.details[0].message,
+      };
+    }
+    const user =await User.findOne({username: username});
+    if(user){
+      return {
+        isValid: false,
+        message: "Username already in use",
+      };
+    }
+    return{
+      isValid: true,
+      message: "Success",
+    };
   }
 }
 export default new AuthService();

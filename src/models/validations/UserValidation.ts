@@ -16,3 +16,13 @@ export const validateUserSignIn = (user: IUser) => {
   });
   return userSchema.validate(user);
 };
+
+export const validateUsername = (username :string) => {
+  const checkValue = {
+    username: username,
+  }
+  const usernameSchema = Joi.object<{ username: string }>({
+    username: Joi.string().min(6).required(),
+  });
+  return usernameSchema.validate(checkValue);
+};
