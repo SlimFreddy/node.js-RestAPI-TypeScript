@@ -26,6 +26,7 @@ You can sign up with a Username and Password. After Sign in you can get all Post
 - SERVER_PORT= "3000"
 
 - JWT_TOKEN_SECRET= "SOME STRING"
+- DEFAULT_USER_IMAGE = ./path/to/defaulte/user-image
 
 5. run `npm install` and `npm start` or `yarn install` and `yarn start` in main folder
 
