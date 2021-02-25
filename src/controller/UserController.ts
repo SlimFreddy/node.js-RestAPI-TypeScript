@@ -2,8 +2,7 @@ import express from "express";
 import verify from "../services/JwtService";
 import multer from "multer";
 import HttpException from "../models/exceptions/HttpException";
-import User from "../models/mongo-db/User";
-import fs from "fs";
+import UserService from "../services/UserService";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -35,19 +34,23 @@ userController.post(
   verify,
   upload.single("user-image"),
   async (req, res, next) => {
-    const filePath = req.file.path;
     try {
-      const user = await User.findByIdAndUpdate(req.user._id, {
-        userImage: filePath,
-      });
-      if (user) {
-        res.json({ user });
-      } else {
-        fs.unlink(filePath, (error) => {
-          return;
-        });
-        throw new HttpException(404, "User not Found");
-      }
+      const user = await UserService.saveUserImage(req);
+      return res.json({ user });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+//DELETE USER IMAGE
+userController.delete(
+  "/user/add-user-image",
+  verify,
+  async (req, res, next) => {
+    try {
+      const user = await UserService.deleteUserImage(req.user._id);
+      return res.json({ user });
     } catch (error) {
       next(error);
     }
