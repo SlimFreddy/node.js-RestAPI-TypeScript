@@ -1,7 +1,6 @@
 import User from "../models/mongo-db/User";
 import fs from "fs";
 import HttpException from "../models/exceptions/HttpException";
-import IUser from "../models/interfaces/IUser";
 
 class UserService {
   public async saveUserImage(req: Express.Request) {
@@ -27,7 +26,9 @@ class UserService {
         fs.unlink(filePath, (error) => {
           return;
         });
-        await User.findByIdAndUpdate(userId, { userImage: "" });
+        await User.findByIdAndUpdate(userId, {
+          userImage: process.env.DEFAULT_USER_IMAGE,
+        });
         return await User.findById(userId);
       } else {
         throw new HttpException(404, "User image not Found");

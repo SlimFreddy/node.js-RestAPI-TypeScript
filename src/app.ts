@@ -19,13 +19,21 @@ const app = express();
 app.use(morgan("dev"));
 // JSON FORMATTER
 app.use(express.json());
+//CORS SETTINGS
+app.use((req, res, next)=>{
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', '*');
+  if(req.method === 'OPTIONS'){
+    res.header('Access-Control-Allow-METHOD', 'POST, GET, DELETE');
+    return res.status(200).json({});
+  }
+})
 //AUTHENTICATION REST API
 app.use("/api/user", authController);
 //POST REST API
 app.use("/api/posts", postController);
 //USER REST API
 app.use("/api/users/", userController);
-
 //PAGE NOT FOUND ERROR
 app.use((req, res, next) => {
   const error = new HttpException(404, "Not Found");

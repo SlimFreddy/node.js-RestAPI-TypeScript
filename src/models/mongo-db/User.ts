@@ -4,8 +4,8 @@ import IUser from "../interfaces/IUser";
 const UserSchema: Schema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
-  date: { type: Date, default: Date.now},
-  userImage: {type: String},
+  date: { type: Date, default: Date.now },
+  userImage: { type: String, required: true },
 });
 
 export default mongoose.model<IUser>("User", UserSchema);
