@@ -29,7 +29,7 @@ authController.get("/username/:username", async (req, res, next) => {
     const usernameValid: IUsernameValid = await AuthService.checkUsername(
       req.params.username
     );
-    return res.json({ usernameValid });
+    return res.json( usernameValid );
   } catch (error) {
     next(error);
   }
