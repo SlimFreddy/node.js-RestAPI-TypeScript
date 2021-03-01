@@ -18,7 +18,7 @@ authController.post("/sign-up", async (req, res, next) => {
 authController.post("/sign-in", async (req, res, next) => {
   try {
     const jwtToken = await AuthService.signInUser(req.body);
-    res.header("jwt", jwtToken).json({ jwt: jwtToken });
+    res.header("jwt", jwtToken.jwt).json({ jwt: jwtToken.jwt, userId :  jwtToken.userId});
   } catch (error) {
     next(error);
   }

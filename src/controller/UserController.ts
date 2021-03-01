@@ -56,7 +56,6 @@ userController.delete("/user/user-image", verify, async (req, res, next) => {
 //GET USER IMAGE
 userController.get(
   "/user/user-image/:userId",
-  verify,
   async (req, res, next) => {
     try {
       const filePath = await UserService.getUserImage(req.params.userId);

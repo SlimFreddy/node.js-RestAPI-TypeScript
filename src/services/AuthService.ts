@@ -46,10 +46,11 @@ class AuthService {
     if (!validPassword) {
       throw new HttpException(500, "Username or password wrong");
     }
-    return jwt.sign(
+    const token: string = jwt.sign(
       { _id: dbUser._id },
       process.env.JWT_TOKEN_SECRET as string
     );
+    return { jwt: token, userId: dbUser._id };
   }
 
   public async checkUsername(username: string): Promise<IUsernameValid> {
