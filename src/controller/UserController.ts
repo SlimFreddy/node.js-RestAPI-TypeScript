@@ -3,7 +3,7 @@ import verify from "../services/JwtService";
 import multer from "multer";
 import HttpException from "../models/exceptions/HttpException";
 import UserService from "../services/UserService";
-import * as path from "path" 
+import * as path from "path";
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, process.env.USER_IMAGE_UPLOAD_PATH as string);
@@ -54,15 +54,21 @@ userController.delete("/user/user-image", verify, async (req, res, next) => {
 });
 
 //GET USER IMAGE
-userController.get(
-  "/user/user-image/:userId",
-  async (req, res, next) => {
-    try {
-      const filePath = await UserService.getUserImage(req.params.userId);
-      return res.sendFile(filePath, {root: path.join(process.cwd(), "./")});
-    } catch (error) {
-      next(error);
-    }
+userController.get("/user/user-image/:userId", async (req, res, next) => {
+  try {
+    const filePath = await UserService.getUserImage(req.params.userId);
+    return res.sendFile(filePath, { root: path.join(process.cwd(), "./") });
+  } catch (error) {
+    next(error);
   }
-);
+});
+
+userController.get("/user/:userId", async (req, res, next) => {
+  try {
+    const user = await UserService.getUser(req.params.userId);
+    return res.json(user);
+  } catch (error) {
+    next(error);
+  }
+});
 export default userController;

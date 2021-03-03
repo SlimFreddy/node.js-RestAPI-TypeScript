@@ -31,7 +31,10 @@ class UserService {
         });
         return await User.findById(userId);
       } else {
-        throw new HttpException(404, "User image not Found");
+        throw new HttpException(
+          404,
+          "Default User Image is already in use, this cant be removed"
+        );
       }
     } else {
       throw new HttpException(404, "User not Found");
@@ -42,8 +45,16 @@ class UserService {
     const user = await User.findById(userId);
     if (user) {
       return user.userImage;
+    } else {
+      throw new HttpException(404, "User Image not Found");
     }
-    else{
+  }
+
+  public async getUser(userId: string) {
+    const user = await User.findById(userId);
+    if (user) {
+      return { _id: user._id, username: user.username };
+    } else {
       throw new HttpException(404, "User Image not Found");
     }
   }

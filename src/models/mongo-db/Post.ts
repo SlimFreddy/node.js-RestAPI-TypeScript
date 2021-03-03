@@ -7,7 +7,7 @@ const PostSchema: Schema = new Schema({
     ref: "User",
   },
   postTitle: { type: String, required: true },
-  postBody: { type: String, required: true },
+  postBody: { type: String, required: true},
   date: { type: Date, default: Date.now },
 });
 

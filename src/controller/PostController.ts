@@ -5,16 +5,13 @@ import PostService from "../services/PostService";
 const postController = express();
 
 // GET ALL POST
-postController.get("/", verify, async (req, res, next) => {
+postController.get("/", async (req, res, next) => {
   try {
     const posts = await PostService.getAllPost();
-    return res.status(200).json({
-      posts,
-    });
+    return res.status(200).json(posts);
   } catch (error) {
-    next(error)
+    next(error);
   }
-
 });
 // GET POST BY ID
 postController.get("/post/:postId", verify, async (req, res, next) => {
@@ -24,9 +21,8 @@ postController.get("/post/:postId", verify, async (req, res, next) => {
       post,
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
-
 });
 // DELETE POST BY ID
 postController.delete("/post/:postId", verify, async (req, res, next) => {

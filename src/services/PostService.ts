@@ -1,4 +1,5 @@
 import { Query } from "mongoose";
+import { RPost, RUser } from "src/models/interfaces/Response";
 import HttpException from "../models/exceptions/HttpException";
 import IPost from "../models/interfaces/IPost";
 import Post from "../models/mongo-db/Post";
@@ -6,11 +7,28 @@ import User from "../models/mongo-db/User";
 import { validatePost } from "../models/validations/PostValidation";
 
 class PostService {
-  public async getAllPost(): Promise<IPost[]> {
+  public async getAllPost(): Promise<RPost[]> {
     try {
-      const posts = await Post.find({});
+      const posts = (await Post.find({})) as IPost[];
       if (posts.length > 0) {
-        return posts;
+        const rPosts: RPost[] = await Promise.all(
+          posts.map(async (post) => {
+            const user = await User.findById(post.author);
+            const rUser: RUser = {
+              _id: user ? user._id : "NOT FOUND",
+              username: user ? user.username : "NOT FOUND",
+            };
+            const rPost: RPost = {
+              _id: post._id,
+              postTitle: post.postTitle,
+              postBody: post.postBody,
+              date: post.date,
+              author: rUser,
+            };
+            return rPost;
+          })
+        );
+        return rPosts;
       } else {
         throw new HttpException(404, `No Posts found`);
       }
@@ -19,11 +37,24 @@ class PostService {
     }
   }
 
-  public async getPostById(id: string): Promise<IPost> {
+  public async getPostById(id: string): Promise<RPost> {
     try {
       const post = await Post.findById(id);
+
       if (post) {
-        return post;
+        const user = await User.findById(post.author);
+        const rUser: RUser = {
+          _id: user ? user._id : "NOT FOUND",
+          username: user ? user.username : "NOT FOUND",
+        };
+        const rPost: RPost = {
+          _id: post._id,
+          postTitle: post.postTitle,
+          postBody: post.postBody,
+          date: post.date,
+          author: rUser,
+        };
+        return rPost;
       } else {
         throw new HttpException(404, `Post with id ${id} not found`);
       }
