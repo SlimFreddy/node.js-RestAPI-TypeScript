@@ -13,6 +13,15 @@ postController.get("/", async (req, res, next) => {
     next(error);
   }
 });
+// GET ALL POST BY USER 
+postController.get("/user/:userId", async (req, res, next) => {
+  try {
+    const posts = await PostService.getAllPostByUser(req.params.userId);
+    return res.status(200).json(posts);
+  } catch (error) {
+    next(error);
+  }
+});
 // GET POST BY ID
 postController.get("/post/:postId", verify, async (req, res, next) => {
   try {

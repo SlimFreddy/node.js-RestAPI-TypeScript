@@ -62,7 +62,7 @@ userController.get("/user/user-image/:userId", async (req, res, next) => {
     next(error);
   }
 });
-
+//GET USER BY ID
 userController.get("/user/:userId", async (req, res, next) => {
   try {
     const user = await UserService.getUser(req.params.userId);

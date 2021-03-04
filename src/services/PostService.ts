@@ -15,8 +15,8 @@ class PostService {
           posts.map(async (post) => {
             const user = await User.findById(post.author);
             const rUser: RUser = {
-              _id: user ? user._id : "NOT FOUND",
-              username: user ? user.username : "NOT FOUND",
+              _id: user ? user._id : "Unknown",
+              username: user ? user.username : "Unknown",
             };
             const rPost: RPost = {
               _id: post._id,
@@ -31,6 +31,48 @@ class PostService {
         return rPosts;
       } else {
         throw new HttpException(404, `No Posts found`);
+      }
+    } catch (error) {
+      throw new HttpException(error.status || 500, error.message);
+    }
+  }
+
+  public async getAllPostByUser(userId: string): Promise<RPost[]> {
+    try {
+      const posts = (await Post.find({})) as IPost[];
+      if (posts.length > 0) {
+        const mappedPosts: (RPost | undefined)[] = await Promise.all(
+          posts.map(async (post) => {
+            if (post.author.toString() === userId) {
+              const user = await User.findById(post.author);
+              const rUser: RUser = {
+                _id: user ? user._id : "Unknown",
+                username: user ? user.username : "Unknown",
+              };
+              const rPost: RPost = {
+                _id: post._id,
+                postTitle: post.postTitle,
+                postBody: post.postBody,
+                date: post.date,
+                author: rUser,
+              };
+              return rPost;
+            }
+          })
+        );
+        const rPosts: RPost[] = [];
+        mappedPosts.forEach((post) => {
+          if (post) {
+            rPosts.push(post);
+          }
+        });
+        if (rPosts.length > 0) {
+          return rPosts;
+        } else {
+          throw new HttpException(404, "This user has no post");
+        }
+      } else {
+        throw new HttpException(404, "No Post found, try later ");
       }
     } catch (error) {
       throw new HttpException(error.status || 500, error.message);
