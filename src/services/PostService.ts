@@ -142,7 +142,7 @@ class PostService {
         } else {
           throw new HttpException(
             500,
-            `Not allowd to delete this post with id ${postId}`
+            `Not allowed to delete this post with id ${postId}`
           );
         }
       } else {
