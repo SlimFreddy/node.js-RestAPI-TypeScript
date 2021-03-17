@@ -134,10 +134,10 @@ class PostService {
     userId: string
   ): Promise<Query<any, IPost>> {
     try {
-      const post = await Post.findById(postId);
+      const post = await Post.findById(postId)
       if (post) {
         if ((post.author as string) === userId) {
-          const deletePost = await Post.deleteOne(post);
+          const deletePost = await Post.deleteOne(post._id)
           return deletePost;
         } else {
           throw new HttpException(
