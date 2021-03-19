@@ -15,8 +15,7 @@ You can sign up with a Username and Password. After Sign in you can get all Post
 
 - MONGO_URL= mongodb://username:password@host:port/database?options... 
 - SERVER_PORT= 3000 
-- JWT_TOKEN_SECRET= SOME STRING 
-- DEFAULT_USER_IMAGE = ./path/to/default/user-image 
+- JWT_TOKEN_SECRET= SOME-STRING 
 - DEFAULT_USER_IMAGE_PATH = ./images/default-user-image.png 
 - USER_IMAGE_UPLOAD_PATH = ./uploads/user-images/
 
